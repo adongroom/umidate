@@ -43,9 +43,30 @@ export default defineConfig({
     `${cdnBaseHttp}moment/moment.min.js`,
     `${cdnBaseHttp}vue/axios.min.js`,
   ],
+  chunks: ['vendors', 'umi'],
   chainWebpack(memo, { env, webpack, createCSSRule }) {
     // 删除 umi 内置插件
     memo.plugins.delete('progress');
     memo.plugins.delete('friendly-error');
+    memo.merge({
+      optimization: {
+        minimize: true,
+        splitChunks: {
+          chunks: 'all',
+          minSize: 30000,
+          minChunks: 3,
+          automaticNameDelimiter: '.',
+          cacheGroups: {
+            vendor: {
+              name: 'vendors',
+              test({ resource }) {
+                return /[\\/]node_modules[\\/]/.test(resource);
+              },
+              priority: 10,
+            },
+          },
+        },
+      },
+    });
   },
 });
