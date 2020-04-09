@@ -1,10 +1,11 @@
 import React, { useState, useEffect } from 'react';
 import { history } from 'umi';
 import Albutm from '@/components/albutm';
-import { Table, Input, Button, Popover, Modal } from 'antd';
-
+import { Table, Input, Button, DatePicker, Popover, Modal } from 'antd';
+const { RangePicker } = DatePicker;
 const { Search } = Input;
-
+import moment from 'moment';
+import locale from 'antd/es/date-picker/locale/zh_CN';
 import styles from './index.less';
 import { getMyClassList } from './service';
 export default () => {
@@ -16,6 +17,7 @@ export default () => {
     uploadnum: 0,
     total: 0,
   });
+    const dateFormat = 'YYYY-MM-DD';
   const [pagination, setPage] = useState({
     pageSize: 20,
     current: 1,
@@ -140,7 +142,13 @@ export default () => {
           style={{ width: 200 }}
         />
       </div>
-
+      <RangePicker
+        locale={locale}
+        defaultValue={[
+          moment('2020/01/01', dateFormat),
+          moment('2020/01/01', dateFormat),
+        ]}
+      />
       {!dataSet.length ? (
         <div>暂无数据</div>
       ) : (
