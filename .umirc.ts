@@ -39,6 +39,9 @@ export default defineConfig({
     moment: 'moment',
     axios: 'axios',
   },
+  headScripts: [
+    { src: 'zh-cn.js', defer: true },
+  ],
   scripts: [
     `${cdnBaseHttp}moment/moment.min.js`,
     `${cdnBaseHttp}vue/axios.min.js`,
